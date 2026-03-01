@@ -1,5 +1,6 @@
 #include "Types.hpp"
 #include <vector>
+#include <ncurses.h>
 
 namespace gidubsar {
 
@@ -10,6 +11,7 @@ namespace gidubsar {
         Sizing height_sizing = Sizing::Fit;
         Positioning positioning_policy = Positioning::Relative;
         std::weak_ptr<UiElement> parent;
+        WINDOW* win = nullptr;
 
         Size size;
         Position position;
@@ -21,7 +23,10 @@ namespace gidubsar {
 
         public:
             UiElement(std::string id, std::vector<std::string> classes = {}) : id(id), classes(classes) {}
-            virtual void draw() = 0;
+            ~UiElement() {
+                if(win) delwin(win);
+            }
+            virtual void write_to_buffer() = 0;
             virtual void handle_input(int ch) = 0;
 
             void set_parent(std::shared_ptr<UiElement> parent) {

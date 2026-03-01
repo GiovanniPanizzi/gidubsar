@@ -1,6 +1,8 @@
 #pragma once
 
 #include <algorithm>
+#include <vector>
+#include <ncurses.h>
 
 namespace gidubsar {
 	enum class Direction {Horizontal, Vertical};
@@ -37,6 +39,35 @@ namespace gidubsar {
 				std::max(min_width, std::min(preferred.width, max_width)),
 				std::max(min_height, std::min(preferred.height, max_height))
 			};
+		}
+	};
+
+	// Rendering
+	struct Cell {
+		chtype ch;
+	};
+
+	struct DrawBuffer {
+		std::vector<Cell> cells;
+		Size size;
+
+		DrawBuffer(int w, int h) {
+			size.width = w;
+			size.height = h;
+			cells.resize(w * h);
+			for (auto &cell : cells) cell.ch = ' ';
+		}
+
+		void put(int x, int y, chtype ch) {
+			if (x < 0 || x >= size.width || y < 0 || y >= size.height) return;
+			cells[y * size.width + x].ch = ch;
+		}
+
+		void render() const {
+			for (int y = 0; y < size.height; y++)
+				for (int x = 0; x < size.width; x++)
+					mvaddch(y, x, cells[y * size.width + x].ch);
+			refresh();
 		}
 	};
 }
