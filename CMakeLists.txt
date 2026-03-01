@@ -8,6 +8,9 @@ find_package(Curses REQUIRED)
 
 add_executable(gidubsar main.cpp)
 
-target_include_directories(gidubsar PRIVATE ${CURSES_INCLUDE_DIR})
+target_include_directories(gidubsar PRIVATE 
+    ${CURSES_INCLUDE_DIR}
+    include
+)
 
 target_link_libraries(gidubsar PRIVATE ${CURSES_LIBRARIES})

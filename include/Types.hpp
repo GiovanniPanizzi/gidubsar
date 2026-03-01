@@ -14,6 +14,13 @@ namespace gidubsar {
 		int height = 0;	
 	};
 
+	struct Padding {
+		int left = 0;
+		int right = 0;
+		int top = 0;
+		int bottom = 0;
+	};
+
 	struct Position {
 		int x = 0;
 		int y = 0;	

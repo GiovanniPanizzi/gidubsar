@@ -21,7 +21,7 @@ int main() {
     header->set_direction(gidusbar::Direction::Horizontal);
     header->set_gap(2);
     header->set_sizing_policy(gidusbar::Sizing::Fill, gidusbar::Sizing::Fit);
-    header->set_positioning(gidusbar::Positioning::Relative);
+    header->set_positioning(gidusbar::Positioning::Fixed_Relative);
     header->set_color(255, 0, 0);
     
     auto title = std::make_shared<gidusbar::Text>("title", "Main Dashboard");
