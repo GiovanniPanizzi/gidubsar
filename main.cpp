@@ -36,6 +36,10 @@ void write_table_width_border_to_buffer(gidubsar::DrawBuffer &buf, gidubsar::Siz
 int main() {
 
     initscr();
+	raw();
+	noecho();
+	keypad(stdscr, TRUE);
+	curs_set(0);
 
 	gidubsar::DrawBuffer buf(80, 80);
 	
