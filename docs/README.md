@@ -11,7 +11,7 @@ int main() {
     stage.init();
 
     // Main layout container
-    auto root = std::make_shared<gidusbar::Table>("root_view");
+    auto root = std::make_shared<gidusbar::Table>("root_view", "class1, class2");
     root->set_direction(gidusbar::Direction::Vertical);
     root->set_gap(1);
     root->set_sizing_policy(gidusbar::Sizing::Fill, gidusbar::Sizing::Fill);
@@ -24,18 +24,21 @@ int main() {
     header->set_positioning(gidusbar::Positioning::Fixed_Relative);
     header->set_color(255, 0, 0);
     
-    auto title = std::make_shared<gidusbar::Text>("title", "Main Dashboard");
+    auto title = std::make_shared<gidusbar::Text>("title", "class1 class2");
+    title->set_text("Hello world!");
     header->add_child(title);
 
     // Content area
     auto content = std::make_shared<gidusbar::Table>("content_area");
     content->set_sizing_policy(gidusbar::Sizing::Fill, gidusbar::Sizing::Fill);
     
-    auto info = std::make_shared<gidusbar::Text>("info_text", "System Status: Nominal");
+    auto info = std::make_shared<gidusbar::Text>("info_text");
+    info->set_text("informations...");
+
     content->add_child(info);
 
     // Footer with interactive button
-    auto exit_btn = std::make_shared<gidusbar::Button>("exit_btn", " QUIT ");
+    auto exit_btn = std::make_shared<gidusbar::Button>("exit_btn");
     exit_btn->set_alignment(gidusbar::Alignment::Center);
 
     root->add_child(header);
