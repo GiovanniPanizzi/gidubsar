@@ -26,10 +26,16 @@ void write_table_border_to_buffer(gidubsar::DrawBuffer &buf, gidubsar::Size size
 
 void write_table_width_border_to_buffer(gidubsar::DrawBuffer &buf, gidubsar::Size size, gidubsar::Position pos) {
 	write_table_border_to_buffer(buf, size, pos);
-	for (int y = 1; y < size.height - 1; ++y) {
-		for (int x = 1; x < size.width - 1; ++x) {
+	for (int y = 1; y < size.height - 1; y++) {
+		for (int x = 1; x < size.width - 1; x++) {
 			buf.put(pos.x + x, pos.y + y, ' ');
 		}
+	}
+}
+
+void write_text_to_buffer(gidubsar::DrawBuffer &buf, const std::string &text, gidubsar::Position pos) {
+	for (size_t i = 0; i < text.size(); ++i) {
+		buf.put(pos.x + i, pos.y, text[i]);
 	}
 }
 
@@ -48,6 +54,7 @@ int main() {
 
 	write_table_width_border_to_buffer(buf, table_size, table_pos);
 	write_table_width_border_to_buffer(buf, {10, 5}, {10, 12});
+	write_text_to_buffer(buf, "Hello, World!", {12, 7});
 	buf.render();
 
 	getch();
