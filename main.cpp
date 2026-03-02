@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <Types.hpp>
+#include "UiElement.hpp"
 #include <vector>
 
 void write_table_border_to_buffer(gidubsar::DrawBuffer &buf, gidubsar::Size size, gidubsar::Position pos, short fg, short bg) {

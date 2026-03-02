@@ -1,6 +1,7 @@
 #include "Types.hpp"
 #include <vector>
 #include <ncurses.h>
+#include <map>
 
 namespace gidubsar {
 
@@ -19,6 +20,8 @@ namespace gidubsar {
         std::string id;
         std::vector<std::string> classes;
 
+        std::map<Signal, std::vector<std::function<void()>>> signal_handlers;
+
         bool focused = false;
 
         public:
@@ -26,6 +29,9 @@ namespace gidubsar {
             ~UiElement() {
                 if(win) delwin(win);
             }
+            virtual void move(Position new_pos);
+            virtual void hide();
+
             virtual void write_to_buffer() = 0;
             virtual void handle_input(int ch) = 0;
 
@@ -41,6 +47,11 @@ namespace gidubsar {
             }
             void set_focus(bool focused) {
                 this->focused = focused;
+            }
+
+            template<typename F>
+            void on_signal(const Signal signal, const F& payload) {
+                signal_handlers[signal].push_back(payload);
             }
     };
 

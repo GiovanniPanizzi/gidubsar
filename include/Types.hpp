@@ -11,6 +11,14 @@ namespace gidubsar {
 	enum class Positioning {Absolute, Relative, Fixed_Absolute, Fixed_Relative};
 	enum class Alignment {Start, Center, End};
 	enum class Wrap {None, Word, Character, Ellipsis};
+
+	enum class Signal {
+		Focus,
+		Blur,
+		Input,
+		Submit,
+		Click
+	};
 	
 	struct Size {
 		int width = 0;
