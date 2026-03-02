@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Types.hpp"
 #include <vector>
 #include <ncurses.h>
