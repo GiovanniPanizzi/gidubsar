@@ -9,7 +9,7 @@ namespace gidubsar {
 
 
     class UiElement : public std::enable_shared_from_this<UiElement> {
-        private:
+        protected:
         Sizing width_sizing = Sizing::Fit;
         Sizing height_sizing = Sizing::Fit;
         Positioning positioning_policy = Positioning::Relative;
@@ -24,6 +24,10 @@ namespace gidubsar {
 
         std::map<Signal, std::vector<std::function<void()>>> signal_handlers;
 
+        // colors
+        short fg = -1;
+        short bg = -1;
+
         bool focused = false;
 
         public:
@@ -34,7 +38,7 @@ namespace gidubsar {
             virtual void move(Position new_pos);
             virtual void hide();
 
-            virtual void write_to_buffer() = 0;
+            virtual void write_to_buffer(DrawBuffer &buf) = 0;
             virtual void handle_input(int ch) = 0;
 
             void set_parent(std::shared_ptr<UiElement> parent) {
@@ -51,14 +55,25 @@ namespace gidubsar {
                 this->focused = focused;
             }
 
+            void set_position(Position pos) {
+                position = pos;
+            }
+
+            Position get_position() const {
+                return position;
+            }
+
             template<typename F>
             void on_signal(const Signal signal, const F& payload) {
                 signal_handlers[signal].push_back(payload);
             }
     };
 
+
+
+
     class ParentElement : public UiElement {
-        private:
+        protected:
             std::vector<std::shared_ptr<UiElement>> children;
 
             Padding padding;
