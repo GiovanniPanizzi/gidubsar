@@ -67,6 +67,28 @@ namespace gidubsar {
             void on_signal(const Signal signal, const F& payload) {
                 signal_handlers[signal].push_back(payload);
             }
+
+            void calculatePositioning() {
+                switch(positioning_policy){
+                    case Positioning::Absolute:
+                        break;
+                    case Positioning::Relative:
+                        if (auto p = parent.lock()) {
+                            position.x += p->position.x;
+                            position.y += p->position.y;
+                        }
+                        break;
+                    case Positioning::Fixed_Absolute:
+                        break;
+                    case Positioning::Fixed_Relative:
+                        if (auto p = parent.lock()) {
+                            Position parent_pos = p->get_position();
+                            position.x += parent_pos.x;
+                            position.y += parent_pos.y;
+                        }
+                        break;
+                }
+            }
     };
 
 
@@ -82,10 +104,6 @@ namespace gidubsar {
             void add_child(std::shared_ptr<UiElement> child) {
                 child->set_parent(shared_from_this());
                 children.push_back(child);
-            }
-
-            void set_padding(Padding p) {
-                padding = p;
             }
     };
 }
